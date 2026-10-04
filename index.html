@@ -3,27 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Managment System</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Teacher Portal Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
+<div class="login-container">
 
-   <form id="form">
-    <Label>Name:</Label>
-      <input type="text" id="name">
-      <Label>Age:</Label>
-      <input type="number" id="age">
-      <Label>Roll:</Label>
-      <input type="number" id="roll">
-      <button type="submit">hh</button>
-   </form>
+    <div class="login-form">
 
+        <div class="form-content">
 
-   <div id="students"></div>
-    
-    <script src="app.js"></script>
-    <script type="module" src="fnc.js"></script>
-    <script type="module" src="managment.js"></script>
+            <span class="small-title">Teacher Portal</span>
+
+            <h1>TEACHER LOGIN</h1>
+
+            <p class="subtitle">
+                Login to manage your Class system
+            </p>
+
+            <form id="admitForm">
+
+                <label for="Admitname">Teacher Name</label>
+                <input
+                    type="text"
+                    id="Admitname"
+                    name="Admitname"
+                    placeholder="Enter your username"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="login-image">
+        <img src="./img/wander-fleur-1lmGTHdQdjM-unsplash.jpg" alt="School">
+    </div>
+
+</div>
+
+<script type="module" src="managment.js"></script>
+<script type="module" src="login.js"></script>
 
 </body>
 </html>

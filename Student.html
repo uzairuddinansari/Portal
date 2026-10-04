@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Managment System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+   <form id="form">
+    <Label>Name:</Label>
+      <input type="text" id="name">
+      <Label>Age:</Label>
+      <input type="number" id="age">
+      <Label>Roll:</Label>
+      <input type="number" id="roll">
+      <Label>Signature:</Label>
+      <input type="text" id="sign">
+      <button type="submit">ADD STUDENT</button>
+
+      <select name="student" id="student">
+        <option value="">Select a Semester</option>
+        <option value="1">Semester 1</option>
+        <option value="2">Semester 2</option>
+      </select>
+   </form>
+
+   
+
+   <div id="students"></div>
+    
+    <script src="app.js"></script>
+    <script type="module" src="fnc.js"></script>
+    <script type="module" src="managment.js"></script>
+
+</body>
+</html>
