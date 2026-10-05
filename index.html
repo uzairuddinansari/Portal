@@ -3,47 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Portal Login</title>
+    <meta name="description" content="School Management System - Teacher Portal Login">
+    <title>Teacher Portal Login | School Management System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
+
+<div class="page-background"></div>
+
 <div class="login-container">
 
     <div class="login-form">
 
         <div class="form-content">
 
-            <span class="small-title">Teacher Portal</span>
+            <div class="brand-badge">
+                <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+                <span class="small-title">Teacher Portal</span>
+            </div>
 
-            <h1>TEACHER LOGIN</h1>
+            <h1 class="main-heading">TEACHER LOGIN</h1>
 
             <p class="subtitle">
-                Login to manage your Class system
+                Welcome back. Sign in to manage your students, class records, and daily attendance.
             </p>
 
-            <form id="admitForm">
+            <form id="admitForm" autocomplete="off" novalidate>
 
-                <label for="Admitname">Teacher Name</label>
-                <input
-                    type="text"
-                    id="Admitname"
-                    name="Admitname"
-                    placeholder="Enter your username"
-                    required
-                >
+                <div class="input-group">
+                    <label for="Admitname">Teacher Name</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <input
+                            type="text"
+                            id="Admitname"
+                            name="Admitname"
+                            placeholder="Enter your username"
+                            required
+                        >
+                    </div>
+                </div>
 
-                <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter your password"
-                    required
-                >
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+                </div>
 
-                <button type="submit">
-                    Login
+                <button type="submit" id="loginBtn" class="submit-btn">
+                    <span>Login to Portal</span>
+                    <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
                 </button>
+
+                <div class="credentials-hint">
+                    <span class="hint-label">Demo Credentials:</span>
+                    <span class="hint-code">Username: <strong>vira</strong></span>
+                    <span class="hint-sep">•</span>
+                    <span class="hint-code">Password: <strong>12345</strong></span>
+                </div>
 
             </form>
 
@@ -52,13 +92,67 @@
     </div>
 
     <div class="login-image">
-        <img src="./img/wander-fleur-1lmGTHdQdjM-unsplash.jpg" alt="School">
+        <img src="./img/wander-fleur-1lmGTHdQdjM-unsplash.jpg" alt="School Classroom" id="schoolCoverImg">
+        <div class="image-overlay">
+            <div class="overlay-card">
+                <span class="overlay-badge">Academic Excellence</span>
+                <h3 class="overlay-title">Empowering Education</h3>
+                <p class="overlay-text">Streamlined student tracking and attendance administration for modern schools.</p>
+            </div>
+        </div>
     </div>
 
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script type="module" src="managment.js"></script>
 <script type="module" src="login.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.gsap) {
+            const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+            tl.fromTo(".login-container", 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.65 }
+            )
+            .fromTo(".brand-badge", 
+                { opacity: 0, y: -10 }, 
+                { opacity: 1, y: 0, duration: 0.4 }, 
+                "-=0.3"
+            )
+            .fromTo([".main-heading", ".subtitle"], 
+                { opacity: 0, y: 12 }, 
+                { opacity: 1, y: 0, duration: 0.45, stagger: 0.1 }, 
+                "-=0.25"
+            )
+            .fromTo(".input-group", 
+                { opacity: 0, y: 15 }, 
+                { opacity: 1, y: 0, duration: 0.4, stagger: 0.1 }, 
+                "-=0.2"
+            )
+            .fromTo(".submit-btn", 
+                { opacity: 0, y: 10 }, 
+                { opacity: 1, y: 0, duration: 0.4 }, 
+                "-=0.1"
+            )
+            .fromTo(".credentials-hint", 
+                { opacity: 0 }, 
+                { opacity: 1, duration: 0.4 }, 
+                "-=0.2"
+            )
+            .fromTo("#schoolCoverImg", 
+                { scale: 1.08, opacity: 0.8 }, 
+                { scale: 1, opacity: 1, duration: 1 }, 
+                "-=0.8"
+            )
+            .fromTo(".overlay-card", 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.6 }, 
+                "-=0.5"
+            );
+        }
+    });
+</script>
 
 </body>
 </html>

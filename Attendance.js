@@ -1,5 +1,46 @@
 import { ATTENDANCE } from "./managment.js";
 
+function showPopup(message) {
+    let existingPopup = document.querySelector(".custom-popup");
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+
+    let popup = document.createElement("div");
+    popup.className = "custom-popup";
+    popup.innerHTML = `
+        <div class="popup-box">
+            <p>${message}</p>
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        popup.classList.add("show");
+    }, 10);
+
+    setTimeout(() => {
+        popup.classList.remove("show");
+        setTimeout(() => popup.remove(), 300);
+    }, 2500);
+}
+
+function showError(inputElement, message) {
+    clearError(inputElement);
+    let error = document.createElement("h4");
+    error.className = "input-error";
+    error.textContent = message;
+    inputElement.after(error);
+}
+
+function clearError(inputElement) {
+    let nextElement = inputElement.nextElementSibling;
+    if (nextElement && nextElement.classList.contains("input-error")) {
+        nextElement.remove();
+    }
+}
+
 let selectedStudent = JSON.parse(
     localStorage.getItem("selectedStudent")
 );
@@ -10,6 +51,12 @@ if (!selectedStudent) {
 
 ATTENDANCE.student.name.textContent = selectedStudent.name;
 ATTENDANCE.student.roll.textContent = selectedStudent.roll;
+
+if (ATTENDANCE.container.password) {
+    ATTENDANCE.container.password.addEventListener("input", () => {
+        clearError(ATTENDANCE.container.password);
+    });
+}
 
 let currentDate = new Date();
 
@@ -76,7 +123,9 @@ function renderCalendar() {
             dayBox.classList.add("today");
         }
 
-        if (attendanceData[dateKey]) {
+        if (attendanceData[dateKey] === "absent") {
+            dayBox.classList.add("absent");
+        } else if (attendanceData[dateKey]) {
             dayBox.classList.add("present");
         }
 
@@ -84,7 +133,9 @@ function renderCalendar() {
             <span class="date">${day}</span>
             <span class="status">
                 ${
-                    attendanceData[dateKey]
+                    attendanceData[dateKey] === "absent"
+                        ? "✗ Absent"
+                        : attendanceData[dateKey]
                         ? "✓ Present"
                         : ""
                 }
@@ -95,9 +146,17 @@ function renderCalendar() {
             dayBox
         );
     }
+
+    if (window.gsap) {
+        gsap.fromTo(ATTENDANCE.container.days.children, 
+            { opacity: 0, scale: 0.96 }, 
+            { opacity: 1, scale: 1, duration: 0.25, stagger: 0.008, ease: "power1.out" }
+        );
+    }
 }
 
-ATTENDANCE.container.absentBtn.addEventListener("click", () => {
+ATTENDANCE.container.absentBtn.addEventListener("click", (e) => {
+    if (e && e.preventDefault) e.preventDefault();
 
     let today = new Date();
 
@@ -105,7 +164,7 @@ ATTENDANCE.container.absentBtn.addEventListener("click", () => {
         `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
     if (attendanceData[dateKey]) {
-        alert("Today's attendance is already marked");
+        showPopup("Today's attendance is already marked");
         return;
     }
 
@@ -115,7 +174,7 @@ ATTENDANCE.container.absentBtn.addEventListener("click", () => {
 
     renderCalendar();
 
-    alert("Absent marked");
+    showPopup("Absent marked");
 });
 
 ATTENDANCE.container.form.addEventListener(
@@ -124,16 +183,16 @@ ATTENDANCE.container.form.addEventListener(
 
         e.preventDefault();
 
-        let password =
-            ATTENDANCE.container.password.value.trim();
+        let passwordInput = ATTENDANCE.container.password;
+        let password = passwordInput.value.trim();
 
         if (password === "") {
-            alert("Please enter your sign");
+            showError(passwordInput, "Please enter student sign");
             return;
         }
 
         if (password !== selectedStudent.sign) {
-            alert("Wrong sign");
+            showPopup("Wrong sign");
             return;
         }
 
@@ -143,7 +202,7 @@ ATTENDANCE.container.form.addEventListener(
             `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
         if (attendanceData[dateKey]) {
-            alert("Today's attendance is already marked");
+            showPopup("Today's attendance is already marked");
             return;
         }
 
@@ -151,13 +210,13 @@ ATTENDANCE.container.form.addEventListener(
 
         saveAttendance();
 
-        ATTENDANCE.container.password.value = "";
+        passwordInput.value = "";
 
         currentDate = new Date();
 
         renderCalendar();
 
-        alert("Attendance marked successfully");
+        showPopup("Attendance marked successfully");
     }
 );
 
